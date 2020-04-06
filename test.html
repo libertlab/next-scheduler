@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <style>
+
+    </style>
+</head>
+<body>
+
+<script src="next-scheduler.js"></script>
+<script>
+    var op1 = new NextOp(function(){
+        setTimeout(function() {
+            op1.finish();
+        }, 1000);
+    }, function(){
+        console.log('op1 finished.');
+    });
+    var op2 = new NextOp(function(){
+        setTimeout(function() {
+            op2.finish();
+        }, 1000);
+    }, function(){
+        console.log('op2 finished.');
+    });
+    var op2_2 = new NextOp(function(){
+        setTimeout(function() {
+            op2_2.finish();
+        }, 2000);
+    }, function(){
+        console.log('op2_2 finished.');
+    });
+    var op2_3 = new NextOp(function(){
+        setTimeout(function() {
+            op2_3.finish();
+        }, 3000);
+    }, function(){
+        console.log('op2_3 finished.');
+    });
+
+    var op3 = new NextOp(function(){
+        setTimeout(function() {
+            op3.finish();
+        }, 1000);
+    }, function(){
+        console.log('op3 finished.');
+    });
+
+
+    var scheduler = new NextScheduler();
+    scheduler.next(op1).next(op2, [op2_2,op2_3]).barrier().next(op3).start();
+
+    setTimeout(function(){
+        scheduler.start();
+    }, 10000);
+
+
+</script>
+</body>
+</html>
