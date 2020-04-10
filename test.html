@@ -12,33 +12,41 @@
 
 <script src="next-scheduler.js"></script>
 <script>
+
+    function showLog(info) {
+        console.log(info);
+        var item = document.createElement("div");
+        item.innerHTML = info;
+        document.body.appendChild(item);
+    }
+
     var op1 = new NextOp(function(){
         setTimeout(function() {
-            op1.finish();
+            op1.finish("[op1]");
         }, 1000);
-    }, function(){
-        console.log('op1 finished.');
+    }, function(args){
+        showLog(args + ' finished.');
     });
     var op2 = new NextOp(function(){
         setTimeout(function() {
             op2.finish();
         }, 1000);
     }, function(){
-        console.log('op2 finished.');
+        showLog('op2 finished.');
     });
     var op2_2 = new NextOp(function(){
         setTimeout(function() {
             op2_2.finish();
         }, 2000);
     }, function(){
-        console.log('op2_2 finished.');
+        showLog('op2_2 finished.');
     });
     var op2_3 = new NextOp(function(){
         setTimeout(function() {
             op2_3.finish();
         }, 3000);
     }, function(){
-        console.log('op2_3 finished.');
+        showLog('op2_3 finished.');
     });
 
     var op3 = new NextOp(function(){
@@ -46,7 +54,7 @@
             op3.finish();
         }, 1000);
     }, function(){
-        console.log('op3 finished.');
+        showLog('op3 finished.');
     });
 
 
@@ -54,6 +62,7 @@
     scheduler.next(op1).next(op2, [op2_2,op2_3]).barrier().next(op3).start();
 
     setTimeout(function(){
+        showLog('------------restart------------');
         scheduler.start();
     }, 10000);
 

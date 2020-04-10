@@ -1,3 +1,7 @@
+/*
+* https://github.com/libertlab/next-scheduler
+* @author: linysuccess@qq.com
+*/
 function NextOp(op, complete) {
     var _op = op;
     var _complete = complete;
@@ -15,8 +19,8 @@ function NextOp(op, complete) {
             _parallel[i].start();
         }
     }
-    this.finish = function() {
-        _complete();
+    this.finish = function(args) {
+        _complete(args);
         if(!hasBarrier && _nextOp!=null) {
             _nextOp.start();
         }
